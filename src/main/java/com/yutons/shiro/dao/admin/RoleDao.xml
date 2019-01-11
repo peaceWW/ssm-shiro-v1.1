@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yutons.shiro.dao.admin.RoleDao">
+    <select id="selectRoles" resultType="role">
+        <!---->
+        SELECT
+        t_role.id,
+        t_role.`name`,
+        t_role.sn,
+        t_role.remark
+        FROM
+        t_role
+    </select>
+    <select id="selectRoleByCondition" resultType="role">
+        <!---->
+        SELECT
+        (@r :=@r + 1) AS id,
+        t_role.id roleId,
+        t_role.`name`,
+        t_role.sn,
+        t_role.remark
+        FROM
+        t_role,
+        (SELECT @r := ${(role.page-1)*role.limit}) r
+        LIMIT ${(role.page-1)*role.limit},
+        ${role.limit}
+    </select>
+    <select id="selectRoleCountByCondition" resultType="integer">
+        <!---->
+        SELECT
+        count(1)
+        FROM
+        t_role
+    </select>
+    <insert id="add">
+        <!---->
+        <selectKey resultType="integer" order="AFTER" keyProperty="role.roleId">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO `t_role` ( `name`, `sn`, `remark`)
+        VALUES
+        (
+        #{role.name},
+        #{role.sn},
+        #{role.remark}
+        );
+    </insert>
+    <insert id="batchAddRoleAndPermission">
+        <!---->
+        INSERT INTO `t_role_permission` (`role_id`, `permission_id`) VALUES
+        <foreach collection="roleAndPermissions" item="roleAndPermission" separator=",">
+            (#{roleAndPermission.roleId}, #{roleAndPermission.permissionId})
+        </foreach>
+    </insert>
+    <select id="selectPermissionByRoleId" resultType="role">
+        <!---->
+        SELECT
+        view_role_permission.permissionname permission
+        FROM
+        view_role_permission
+        where view_role_permission.id=${roleId}
+    </select>
+    <select id="selectRoleById" resultType="role">
+        <!---->
+        SELECT
+        t_role.id roleId,
+        t_role.`name`,
+        t_role.sn,
+        t_role.remark
+        FROM
+        t_role
+        where t_role.id=#{roleId}
+    </select>
+    <update id="update">
+        <!---->
+        UPDATE `t_role`
+        SET `name` = #{role.name},
+        `sn` = #{role.sn},
+        `remark` = #{role.remark}
+        WHERE
+        `id` = #{role.roleId};
+    </update>
+    <delete id="delectPermissionByRoleId">
+        <!---->
+        DELETE
+        FROM
+        t_role_permission
+        WHERE
+        t_role_permission.role_id =#{roleId}
+    </delete>
+    <delete id="deleteRoleById">
+        <!---->
+        DELETE
+        FROM
+        t_role where t_role.id=#{roleId}
+    </delete>
+    <select id="selectRoleByUserId" resultType="role">
+        <!---->
+        SELECT
+        view_role_user.id,
+        view_role_user.`name`,
+        view_role_user.sn,
+        view_role_user.user_id
+        FROM
+        view_role_user
+        where view_role_user.user_id=#{user.userId}
+    </select>
+</mapper>
+

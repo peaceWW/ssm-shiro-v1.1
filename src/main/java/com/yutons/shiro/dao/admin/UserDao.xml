@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yutons.shiro.dao.admin.UserDao">
+    <select id="findByUserName" resultType="user">
+        <!---->
+        SELECT
+        view_user_dept_role.id,
+        view_user_dept_role.id userId,
+        view_user_dept_role.staffname,
+        view_user_dept_role.username,
+        view_user_dept_role.`password`,
+        view_user_dept_role.`status`,
+        view_user_dept_role.deptname,
+        view_user_dept_role.rolename,
+        view_user_dept_role.roleId,
+        view_user_dept_role.deptId
+        FROM
+        view_user_dept_role
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectPermissionsByUserId" parameterType="integer" resultType="permission">
+        <!---->
+        SELECT
+        view_permission_user.id,
+        view_permission_user.`name`,
+        view_permission_user.menuname,
+        view_permission_user.permission,
+        view_permission_user.url,
+        view_permission_user.flag,
+        view_permission_user.zindex,
+        view_permission_user.parantid,
+        view_permission_user.userid
+        FROM
+        view_permission_user
+        where view_permission_user.userid=#{userId}
+    </select>
+    <select id="selectRoleSnsByUserId" parameterType="integer" resultType="string">
+        <!---->
+        SELECT
+        view_role_user.sn
+        FROM
+        view_role_user
+        where view_role_user.user_id=#{userId}
+    </select>
+    <select id="selectRoleIdByUserId" parameterType="integer" resultType="integer">
+        <!---->
+        SELECT
+        t_user_role.role_id
+        FROM
+        t_user_role
+        where t_user_role.user_id=#{userId}
+    </select>
+    <select id="selectAllMenus" resultType="permission">
+        <!---->
+        SELECT
+        t_permission.id,
+        t_permission.`name`,
+        t_permission.menuname,
+        t_permission.permission,
+        t_permission.url,
+        t_permission.flag,
+        t_permission.zindex,
+        t_permission.parantid
+        FROM
+        t_permission
+        where t_permission.flag=1/*生成菜单*/
+    </select>
+    <select id="selectMenusByUserId" resultType="permission">
+        <!---->
+        SELECT
+        view_permission_user.id,
+        view_permission_user.`name`,
+        view_permission_user.menuname,
+        view_permission_user.permission,
+        view_permission_user.url,
+        view_permission_user.flag,
+        view_permission_user.zindex,
+        view_permission_user.parantid,
+        view_permission_user.userid
+        FROM
+        view_permission_user
+        where view_permission_user.flag=1/*生成菜单*/
+        <if test="userId!=null">and view_permission_user.userid=#{userId}</if>
+    </select>
+    <select id="selectUserByCondition" resultType="user">
+        <!---->
+        SELECT
+        (@r :=@r + 1) AS id,
+        view_user_dept_role.id userId,
+        view_user_dept_role.staffname,
+        view_user_dept_role.username,
+        view_user_dept_role.deptId,
+        view_user_dept_role.deptname,
+        view_user_dept_role.roleId,
+        view_user_dept_role.rolename,
+        view_user_dept_role.`password`,
+        view_user_dept_role.`status`
+        FROM
+        view_user_dept_role,
+        (SELECT @r := ${(user.page-1)*user.limit}) r
+        LIMIT ${(user.page-1)*user.limit},
+        ${user.limit}
+    </select>
+    <select id="selectUserCountByCondition" resultType="integer">
+        <!---->
+        SELECT
+        count(1)
+        FROM
+        view_user_dept_role
+    </select>
+    <insert id="insert">
+        <!---->
+        <selectKey resultType="integer" order="AFTER" keyProperty="user.userId">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO `t_user` (
+        `dept_id`,
+        `staffname`,
+        `username`,
+        `password`,
+        `status`
+        )
+        VALUES
+        (
+        #{user.deptId},
+        #{user.staffname},
+        #{user.username},
+        #{user.password},
+        #{user.status});
+    </insert>
+    <insert id="insertUserRole">
+        <!---->
+        INSERT INTO `t_user_role` (`user_id`, `role_id`)
+        VALUES
+        (#{user.userId}, #{user.roleId});
+    </insert>
+    <select id="selectUserById" resultType="user">
+        <!---->
+        SELECT
+        view_user_dept_role.id,
+        view_user_dept_role.id userId,
+        view_user_dept_role.staffname,
+        view_user_dept_role.username,
+        view_user_dept_role.`password`,
+        view_user_dept_role.`status`,
+        view_user_dept_role.deptname,
+        view_user_dept_role.rolename,
+        view_user_dept_role.roleId,
+        view_user_dept_role.deptId
+        FROM
+        view_user_dept_role
+        where view_user_dept_role.id=#{userId}
+    </select>
+    <update id="update">
+        <!---->
+        UPDATE `t_user`
+        SET `dept_id` = #{user.deptId},
+        `staffname` = #{user.staffname},
+        `username` = #{user.username},
+        `password` = #{user.password},
+        `status` = #{user.status}
+        WHERE
+        (`id` =${user.userId});
+    </update>
+    <delete id="delectUserRole">
+        <!---->
+        DELETE
+        FROM
+        t_user_role
+        WHERE
+        t_user_role.user_id = #{user.userId}
+    </delete>
+
+    <insert id="addUserRole">
+        <!---->
+        INSERT INTO
+        `t_user_role` (`user_id`, `role_id`)
+        VALUES
+        (#{user.userId}, #{user.roleId});
+    </insert>
+    <update id="updateStatusById">
+        <!---->
+        UPDATE `t_user`
+        SET `status` = #{user.status}
+        WHERE
+        `id` = #{user.userId};
+    </update>
+    <delete id="deleteUserById">
+        <!---->
+        delete from t_user where id=#{user.userId}
+    </delete>
+    <select id="loadByUserName" resultType="user">
+        <!---->
+        SELECT
+        t_user.id,
+        t_user.dept_id,
+        t_user.staffname,
+        t_user.username,
+        t_user.`password`,
+        t_user.`status`
+        FROM
+        t_user
+        WHERE
+        username = #{username}
+    </select>
+    <update id="updatePwd">
+        UPDATE `t_user`
+        SET `password` = #{user.password}
+        WHERE
+        `id` = #{user.id};
+    </update>
+    <select id="findByUserId" resultType="user">
+        <!---->
+        SELECT
+        t_user.id,
+        t_user.dept_id,
+        t_user.staffname,
+        t_user.username,
+        t_user.`password`,
+        t_user.`status`
+        FROM
+        t_user
+        where t_user.id=#{userId}
+    </select>
+</mapper>
+
