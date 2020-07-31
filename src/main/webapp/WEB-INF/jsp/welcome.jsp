@@ -25,8 +25,8 @@
 <body>
 <div class="layui-container">
     <!--
-作者：yuton.yao@qq.com
-时间：2017-09-01
+
+
 描述：引入公共html
 -->
     <div class="layui-row">

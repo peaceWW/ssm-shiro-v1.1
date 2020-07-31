@@ -181,3 +181,20 @@ DROP VIEW IF EXISTS `view_user_dept_role`;
 CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`` SQL SECURITY DEFINER VIEW `view_user_dept_role` AS select `t_user`.`id` AS `id`,`t_user`.`dept_id` AS `dept_id`,`t_user`.`staffname` AS `staffname`,`t_user`.`username` AS `username`,`t_user`.`password` AS `password`,`t_user`.`status` AS `status`,`t_dept`.`name` AS `deptname`,`t_role`.`name` AS `rolename`,`t_role`.`id` AS `roleId`,`t_dept`.`id` AS `deptId` from (((`t_user` left join `t_dept` on((`t_user`.`dept_id` = `t_dept`.`id`))) left join `t_user_role` on((`t_user`.`id` = `t_user_role`.`user_id`))) left join `t_role` on((`t_user_role`.`role_id` = `t_role`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+CREATE TABLE `tm_trade_batch_info`  (
+  `id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `trade_no` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `trade_id` bigint(10) NULL DEFAULT NULL,
+  `lot` bigint(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+CREATE TABLE `tm_trade_info` (
+  `id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `trade_no` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `trade_amount` bigint(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

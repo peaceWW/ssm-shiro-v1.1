@@ -96,6 +96,7 @@
 		<!--2:/ 拦截所有请求 （不拦截.jsp) 建议使用此种 方式 （拦截 .js.css .png) (放行静态资源) -->
 		<!--3:/* 拦截所有请求（包括.jsp) 此种方式 不建议使用 -->
 		<url-pattern>/</url-pattern>
+		<url-pattern>/admin/product/viewQr</url-pattern>
 	</servlet-mapping>
 	<!-- 前端控制器 end -->
 </web-app>
