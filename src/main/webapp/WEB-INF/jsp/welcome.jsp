@@ -114,7 +114,7 @@
                 style="font-family:等线; font-size:14pt">超级管理员</span><span style="font-family:等线; font-size:14pt">:admin,密码:000000</span>
         </p>
         <p style="margin:0pt; orphans:0; text-align:justify; text-indent:20pt; widows:0"><span
-                style="font-family:等线; font-size:14pt">管理员</span><span style="font-family:等线; font-size:14pt">:yutons,密码:000000</span>
+                style="font-family:等线; font-size:14pt">管理员</span><span style="font-family:等线; font-size:14pt">:peace,密码:000000</span>
         </p>
         <p style="margin:0pt; orphans:0; text-align:justify; text-indent:20pt; widows:0"><span
                 style="font-family:等线; font-size:14pt">用户</span><span style="font-family:等线; font-size:14pt">:user,密码:000000</span>

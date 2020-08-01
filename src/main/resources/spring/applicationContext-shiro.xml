@@ -33,11 +33,11 @@
     </bean>
     <!-- 凭证匹配器 end-->
     <!-- 自定义一个权限匹配器 begin -->
-    <bean id="permissionResolver" class="com.yutons.shiro.shiro.permission.UrlPermissionResolver"/>
+    <bean id="permissionResolver" class="com.peace.shiro.shiro.permission.UrlPermissionResolver"/>
     <!-- 自定义一个权限匹配器 end -->
     <!-- Realm实现 begin-->
     <!-- 声明一个自定义的 Realm -->
-    <bean id="myRealm" class="com.yutons.shiro.shiro.realm.MyRealm">
+    <bean id="myRealm" class="com.peace.shiro.shiro.realm.MyRealm">
         <!-- 将上面声明的密码匹配器注入到自定义 Realm 的属性中去 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <!-- 将自定义的权限匹配器注入到自定义 Realm 中 -->
@@ -122,7 +122,7 @@
     <!-- 配置 shiro 的 ehcache 缓存相关,这个缓存只和 Realm 相关 begin -->
     <!--重写EhCacheManager,关闭流-->
     <!--<bean id="ehCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"></bean>-->
-    <bean id="ehCacheManager" class="com.yutons.shiro.shiro.cache.EhCacheManager"></bean>
+    <bean id="ehCacheManager" class="com.peace.shiro.shiro.cache.EhCacheManager"></bean>
     <!-- 配置 shiro 的 ehcache 缓存相关,这个缓存只和 Realm 相关 end -->
 
     <!-- 配置安全管理器 begin -->
@@ -135,7 +135,7 @@
     </bean>
     <!-- 配置安全管理器 end-->
     <!-- 声明一个自定义的过滤器 begin -->
-    <bean id="resourceCheckFilter" class="com.yutons.shiro.shiro.filter.PermissionCheckFilter">
+    <bean id="resourceCheckFilter" class="com.peace.shiro.shiro.filter.PermissionCheckFilter">
         <!-- 为上面声明的自定义过滤器注入属性值 -->
         <property name="errorUrl" value="/unAuthorization"/>
     </bean>

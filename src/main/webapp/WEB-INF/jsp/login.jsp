@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: yutons
+  User: peace
   Date: 2017/12/13/013
   Time: 17:01
   To change this template use File | Settings | File Templates.
@@ -54,7 +54,7 @@
 </div>
 <div id="js-footer" class="footer">
     <div class="w1000">
-        <p> Copyrights &copy; yutons All Rights Reserved.</p>
+        <p> Copyrights &copy; peace All Rights Reserved.</p>
     </div>
 </div>
 <!--Apache Shiro会话超时，登录页面跳转到父窗体的解决方法-->

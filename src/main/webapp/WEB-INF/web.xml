@@ -23,7 +23,7 @@
 	<!-- initServlet end -->
 	<servlet>
 		<servlet-name>initServlet</servlet-name>
-		<servlet-class>com.yutons.shiro.web.InitServlet</servlet-class>
+		<servlet-class>com.peace.shiro.web.InitServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!-- initServlet end -->

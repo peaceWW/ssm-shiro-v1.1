@@ -33,6 +33,6 @@
 	<!-- 切面 -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* com.yutons.shiro.service.*.*(..))" />
+			pointcut="execution(* com.peace.shiro.service.*.*(..))" />
 	</aop:config>
 </beans>

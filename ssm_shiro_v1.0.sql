@@ -135,7 +135,7 @@ CREATE TABLE `t_user`  (
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES (1, 1, 'admin', 'admin', '53f139e187e60f8376343990737b8fec', 1);
-INSERT INTO `t_user` VALUES (2, 2, 'yutons', 'yutons', '650ce2fecc42ba4d47d9fa0ad0c475c8', 1);
+INSERT INTO `t_user` VALUES (2, 2, 'peace', 'peace', '650ce2fecc42ba4d47d9fa0ad0c475c8', 1);
 INSERT INTO `t_user` VALUES (3, 3, 'user', 'user', '2f2adc2fe65335edc3f8a9d996899fd5', 1);
 
 -- ----------------------------

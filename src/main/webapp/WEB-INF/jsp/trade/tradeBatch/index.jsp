@@ -103,9 +103,9 @@
                         '                    </tr>\n' +
                         '                </thead>\n' +
                         '                <tbody>\n' +
+                        '                            <input type="hidden" id="splitId"  value='+data.id+'></td>\n' +
                         '                    <tr>\n' +
                         '                        <td><input type="text" id="layui-input" class="layui-input" name="price" value='+data.lot+'>' +
-                        '                            <input type="hidden" id="splitId"  value='+data.id+'></td>\n' +
                         '                        <td>\n' +
                         '                            <a class="layui-btn layui-btn-xs add">添加</a>\n' +
                         '                            <a class="layui-btn layui-btn-danger layui-btn-xs del">删除</a>\n' +
@@ -113,7 +113,7 @@
                         '                    </tr>\n' +
                         '                </tbody>\n' +
                         '            </table>' +
-                        '<button class="layui-btn" type="button" onclick="split();">test</button>'
+                        '<button class="layui-btn" type="button" onclick="split();">确定</button>'
 
                 });
             }
@@ -241,16 +241,29 @@
                 url: '${pageContext.request.contextPath}/trade/splitTrade',
                 data: JSON.stringify(opt),
                 success: function (result) {
-                    layer.msg('拆分成功', {
-                        time: 20000, //20s后自动关闭
-                        area: '300px;',
-                        btn: '确定',
-                        yes: function(){
-                            location.reload();
-                            layer.closeAll();
-                            location.reload();
-                        }
-                    });
+                    if("SUCCESS"==result.code){
+                        layer.msg('拆分成功', {
+                            time: 20000, //20s后自动关闭
+                            area: '300px;',
+                            btn: '确定',
+                            yes: function(){
+                                location.reload();
+                                layer.closeAll();
+                                location.reload();
+                            }
+                        });
+                    }else{
+                        layer.msg('拆分失败:'+result.message, {
+                            time: 20000, //20s后自动关闭
+                            area: '300px;',
+                            btn: '确定',
+                            yes: function () {
+                                location.reload();
+                                layer.closeAll();
+                                location.reload();
+                            }
+                        })
+                    }
                 },
                 dataType: "json"
             });
